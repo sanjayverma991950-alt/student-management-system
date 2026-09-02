@@ -68,6 +68,10 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: 'Please provide both email and password' });
+    }
+
     // Check for user email
     const user = await User.findOne({ email }).select('+password');
 
@@ -83,7 +87,7 @@ const loginUser = async (req, res) => {
         },
       });
     } else {
-      res.status(401).json({ success: false, message: 'Invalid credentials' });
+      res.status(401).json({ success: false, message: 'Invalid email or password' });
     }
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -122,11 +126,39 @@ const getMe = async (req, res) => {
 // @access  Public
 const seedDummyData = async (req, res) => {
   try {
-    const teacher = await User.findOne({ email: 'teacher@school.com' });
-    const student = await User.findOne({ email: 'student@school.com' });
+    let admin = await User.findOne({ email: 'admin@school.com' });
+    if (!admin) {
+      admin = await User.create({
+        name: 'Demo Admin',
+        email: 'admin@school.com',
+        password: 'admin123',
+        role: 'admin',
+      });
+    }
 
-    if (!teacher || !student) {
-      return res.status(400).json({ success: false, message: 'Please register teacher and student accounts first' });
+    let teacher = await User.findOne({ email: 'teacher@school.com' });
+    if (!teacher) {
+      teacher = await User.create({
+        name: 'Demo Teacher',
+        email: 'teacher@school.com',
+        password: 'teacher123',
+        role: 'teacher',
+      });
+    }
+
+    let student = await User.findOne({ email: 'student@school.com' });
+    if (!student) {
+      student = await User.create({
+        name: 'Demo Student',
+        email: 'student@school.com',
+        password: 'student123',
+        role: 'student',
+      });
+      await StudentProfile.findOneAndUpdate(
+        { user: student._id },
+        { user: student._id, rollNumber: 'ROLL-101', phone: '1234567890', address: '123 Main St, Tech City' },
+        { upsert: true, new: true }
+      );
     }
 
     // Import models
@@ -134,7 +166,7 @@ const seedDummyData = async (req, res) => {
     const Grade = require('../models/Grade');
     const Attendance = require('../models/Attendance');
 
-    // Remove any existing data to start fresh
+    // Remove any existing demo courses/grades/attendance to start fresh
     await Course.deleteMany({ code: { $in: ['CS101', 'WD202'] } });
     await Grade.deleteMany({ student: student._id });
     await Attendance.deleteMany({ student: student._id });
