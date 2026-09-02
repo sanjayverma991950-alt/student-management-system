@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import axios from '../config/axios';
 import { BookOpen, Users, CalendarCheck, GraduationCap, ArrowRight, BrainCircuit } from 'lucide-react';
 import { Link } from 'react-router-dom';
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../config/axios';
 import { useAuth } from '../context/AuthContext';
 import { CalendarDays, Save, CheckCircle, AlertCircle, AlertTriangle } from 'lucide-react';
 

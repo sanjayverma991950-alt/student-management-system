@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../config/axios';
 import { useAuth } from '../context/AuthContext';
 import { Search, UserPlus, Trash2, Edit2, BrainCircuit, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';

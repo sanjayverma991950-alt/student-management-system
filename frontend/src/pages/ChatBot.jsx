@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../config/axios';
 import { useAuth } from '../context/AuthContext';
 import { BrainCircuit, Send, Sparkles, BookOpen, AlertCircle, HelpCircle } from 'lucide-react';
 

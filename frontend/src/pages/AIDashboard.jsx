@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../config/axios';
 import { useSearchParams } from 'react-router-dom';
 import { BrainCircuit, Play, FileDown, CheckCircle, Sparkles } from 'lucide-react';
 

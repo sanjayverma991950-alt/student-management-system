@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { GraduationCap, Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react';
-import axios from 'axios';
+import axios from '../config/axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
