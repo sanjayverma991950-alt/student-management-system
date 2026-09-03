@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-// Use deployed backend URL from .env, fallback to localhost for local dev
-const baseURL = import.meta.env.VITE_API_URL || '';
+// Use deployed backend URL from env, with fallback to live Render backend
+const baseURL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD
+    ? 'https://student-management-system-ss8i.onrender.com'
+    : '');
 
 const axiosInstance = axios.create({
   baseURL,
