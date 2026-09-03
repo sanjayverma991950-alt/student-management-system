@@ -1,7 +1,10 @@
 {
   "name": "student-management-system",
   "private": true,
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
-    "build": "npm run build --prefix frontend"
+    "build": "npm install --prefix frontend && npm run build --prefix frontend"
   }
 }
