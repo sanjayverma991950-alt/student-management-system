@@ -38,15 +38,13 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const res = await axios.post('/api/auth/login', { email, password });
-      const { token } = res.data.data;
-      localStorage.setItem('token', token);
-      
-      // Load full user details
-      const meRes = await axios.get('/api/auth/me');
-      setUser(meRes.data.data);
-      return meRes.data.data;
+      const userData = res.data.data;
+      localStorage.setItem('token', userData.token);
+      setUser(userData);
+      return userData;
     } catch (err) {
-      const msg = err.response?.data?.message || 'Login failed';
+      console.error('Login error:', err);
+      const msg = err.response?.data?.message || err.message || 'Login failed';
       setError(msg);
       throw new Error(msg);
     } finally {
@@ -59,14 +57,13 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const res = await axios.post('/api/auth/register', userData);
-      const { token } = res.data.data;
-      localStorage.setItem('token', token);
-      
-      const meRes = await axios.get('/api/auth/me');
-      setUser(meRes.data.data);
-      return meRes.data.data;
+      const userResData = res.data.data;
+      localStorage.setItem('token', userResData.token);
+      setUser(userResData);
+      return userResData;
     } catch (err) {
-      const msg = err.response?.data?.message || 'Registration failed';
+      console.error('Registration error:', err);
+      const msg = err.response?.data?.message || err.message || 'Registration failed';
       setError(msg);
       throw new Error(msg);
     } finally {

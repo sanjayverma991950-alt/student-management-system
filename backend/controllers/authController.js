@@ -76,6 +76,11 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email }).select('+password');
 
     if (user && (await user.matchPassword(password))) {
+      let profile = null;
+      if (user.role === 'student') {
+        profile = await StudentProfile.findOne({ user: user._id });
+      }
+
       res.json({
         success: true,
         data: {
@@ -83,6 +88,7 @@ const loginUser = async (req, res) => {
           name: user.name,
           email: user.email,
           role: user.role,
+          profile,
           token: generateToken(user._id),
         },
       });
