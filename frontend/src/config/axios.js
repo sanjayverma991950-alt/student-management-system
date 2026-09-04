@@ -4,7 +4,7 @@ import axios from 'axios';
 const baseURL =
   import.meta.env.VITE_API_URL ||
   (import.meta.env.PROD
-    ? 'https://student-management-system-ss8i.onrender.com'
+    ? 'https://student-management-system-1-muaj.onrender.com'
     : '');
 
 const axiosInstance = axios.create({
